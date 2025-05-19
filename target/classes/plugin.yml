@@ -1,0 +1,15 @@
+name: ItemPlacing
+version: '1.0-SNAPSHOT'
+main: hu.shiya.itemPlacing.ItemPlacing
+api-version: '1.21'
+authors: [ Shiya ]
+description: A Plugin that welcomes a newly joined player
+commands:
+  hat:
+    description: Puts an item on your head.
+    usage: /hat
+permissions:
+  hat:
+    use:
+      default: true
+      description: A player is able to put specific items on his head
