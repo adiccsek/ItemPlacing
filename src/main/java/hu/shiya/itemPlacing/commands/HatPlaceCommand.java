@@ -24,7 +24,7 @@ public class HatPlaceCommand implements CommandExecutor {
         if (commandSender instanceof Player player ) {
             ItemStack itemInHand = player.getInventory().getItemInMainHand();
             if (itemInHand.getType() == Material.AIR) {
-                player.sendMessage(" You can't put nothing on your head! ");
+                player.sendMessage(" You can't put air on your head! ");
                 return true;
             }
             Material itemOnHead;
@@ -37,28 +37,28 @@ public class HatPlaceCommand implements CommandExecutor {
             List<String> bannedItems = plugin.getConfig().getStringList("banned-items");
             List<ItemStack> bannedItemsStack = new ArrayList<>();
 
-
             for (String oneItem : bannedItems) {
                 Material temp = Material.valueOf(oneItem.toUpperCase());
                 ItemStack itemStackItem = new ItemStack ( temp );
                 bannedItemsStack.add( itemStackItem );
             }
+
             for (ItemStack itemStack : bannedItemsStack) {
                 if (itemStack.getType() == itemInHand.getType()) {
-                    if (itemOnHead == Material.AIR && player.hasPermission("hat.put")) {
-                        player.getInventory().setHelmet(itemInHand);
-                        player.sendMessage(ChatColor.GREEN + "The item was succesfully put on your head!");
-                    }
-                    else {
-                        player.sendMessage(ChatColor.RED + "You have something on your head already!");
-                         }
-                }
-                else {
                     player.sendMessage(ChatColor.RED + " This is a banned item! ");
                     return true;
                 }
             }
-        }
+                if (itemOnHead == Material.AIR && player.hasPermission("hat.put")) {
+                    player.getInventory().setHelmet(itemInHand);
+                    player.sendMessage(ChatColor.GREEN + "The item was succesfully put on your head!");
+                    return true;
+                }
+                else if (itemOnHead != Material.AIR && player.hasPermission("hat.put")) {
+                    player.sendMessage(ChatColor.RED + "You have something on your head already!");
+                    return true;
+                }
+            }
         return true;
     }
 }
